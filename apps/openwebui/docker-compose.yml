@@ -9,6 +9,12 @@ services:
       - webui:/app/data
     networks:
       cn1:
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.openwebui-rtr.tls=true
+      - traefik.http.routers.openwebui-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.openwebui-rtr.entrypoints=https
+      - traefik.http.services.openwebui-svc.loadbalancer.server.port=8080
 volumes:
   webui:
 networks:
