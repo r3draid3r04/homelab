@@ -7,8 +7,6 @@ services:
       - IMMICH_URL=${IMMICH_URL}
       - IMMICH_API_KEY=${IMMICH_API_KEY}
       - DATABASE_URL=${DATABASE_URL}
-    env_file:
-      - .env
     restart: unless-stopped
     labels:
       - traefik.enable=true
