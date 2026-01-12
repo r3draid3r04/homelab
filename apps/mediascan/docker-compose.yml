@@ -1,0 +1,36 @@
+services:
+  mediascan:
+    image: registry.kylerockwell.dev/docker/mediascan:0.1.8
+    container_name: mediascan
+    ports:
+      - 3092:80 # Access the app at http://localhost:3000
+    volumes:
+      - unraid-plex-media:/media/Plex # Plex media library
+      - /home/kyle/appdata/mediascan/config:/app/config # Config files
+      # Optional: Mount .env file if you need custom env variables
+      # - ./backend/.env:/app/backend/.env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PLEX_HOST=${PLEX_BASE_URL}
+      - PLEX_TOKEN=${PLEX_TOKEN}
+    restart: unless-stopped
+    networks:
+      - cn1
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost/api/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+volumes:
+  unraid-plex-media:
+    external: true
+  uunraid-plex-new-media:
+    external: true
+networks:
+  cn1:
+    external: true

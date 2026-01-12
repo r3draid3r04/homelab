@@ -1,0 +1,23 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: unless-stopped
+    networks:
+      - cn1
+    ports:
+      - 3021:3001
+    volumes:
+      - uptime-kuma-data:/app/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.uptime-rtr.tls=true
+      - traefik.http.routers.uptime-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.uptime-rtr.entrypoints=https
+      - traefik.http.services.uptime-svc.loadbalancer.passhostheader=true
+      - traefik.http.services.uptime-svc.loadbalancer.server.port=3001
+networks:
+  cn1:
+    external: true
+volumes:
+  uptime-kuma-data: null

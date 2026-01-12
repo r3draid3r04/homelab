@@ -1,0 +1,23 @@
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    container_name: freshrss
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /home/kyle/appdata/freshrss/data:/var/www/FreshRSS/data
+      - /home/kyle/appdata/extensions:/var/www/FreshRSS/extensions
+    restart: unless-stopped
+    networks:
+      cn1: null
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.freshrss-rtr.tls=true
+      - traefik.http.routers.freshrss-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.freshrss-rtr.entrypoints=https
+      - traefik.http.services.freshrss-svc.loadbalancer.server.port=80
+networks:
+  cn1:
+    external: true

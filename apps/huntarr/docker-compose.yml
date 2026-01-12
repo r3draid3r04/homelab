@@ -1,0 +1,16 @@
+services:
+  huntarr:
+    image: ghcr.io/plexguide/huntarr:latest
+    container_name: huntarr
+    networks:
+      cn1:
+    restart: unless-stopped
+    ports:
+      - "9705:9705"
+    volumes:
+      - /home/kyle/appdata/huntarr:/config
+    environment:
+      - TZ=America/Chicago
+networks:
+  cn1:
+    external: true

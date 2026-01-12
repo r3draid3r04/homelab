@@ -1,0 +1,120 @@
+name: immich
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    # extends:
+    #   file: hwaccel.transcoding.yml
+    #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    volumes:
+      # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+      - synology-photos:/usr/src/app/external/synology
+    env_file:
+      - .env
+    ports:
+      - 2283:2283
+    depends_on:
+      - redis
+      - database
+    restart: always
+    networks:
+      cn1: null
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.immich-server-rtr.tls=true
+      - traefik.http.routers.immich-server-rtr.rule=Host(`immich.kylerockwell.dev`)
+      - traefik.http.routers.immich-server-rtr.entrypoints=https
+      - traefik.http.services.immich-server-svc.loadbalancer.server.port=2283
+    healthcheck:
+      disable: false
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    # For hardware acceleration, add one of -[armnn, cuda, openvino] to the image tag.
+    # Example tag: ${IMMICH_VERSION:-release}-cuda
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    # extends: # uncomment this section for hardware acceleration - see https://immich.app/docs/features/ml-hardware-acceleration
+    #   file: hwaccel.ml.yml
+    #   service: cpu # set to one of [armnn, cuda, openvino, openvino-wsl] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    volumes:
+      - model-cache:/cache
+    env_file:
+      - .env
+    restart: always
+    networks:
+      cn1: null
+    healthcheck:
+      disable: false
+  redis:
+    container_name: immich_redis
+    image: docker.io/redis:6.2-alpine@sha256:eaba718fecd1196d88533de7ba49bf903ad33664a92debb24660a922ecd9cac8
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+    networks:
+      cn1: null
+  database:
+    container_name: immich_postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      POSTGRES_INITDB_ARGS: --data-checksums
+    volumes:
+      # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
+      - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      cn1: null
+  #  immich-kiosk:
+  #    image: damongolding/immich-kiosk:latest
+  #    container_name: immich_kiosk
+  #    environment:
+  #      TZ: America/Chicago
+  #    volumes:
+  #      # Mount the directory with config.yaml inside
+  #      - /appdata/immichkiosk/config:/config
+  #    restart: always
+  #    ports:
+  #      - 3036:3000
+  #    labels:
+  #      - traefik.enable=true
+  #      - traefik.http.routers.immichkiosk-server-rtr.tls=true
+  #      - traefik.http.routers.immichkiosk-server-rtr.rule=Host(`immichkiosk.kylerockwell.dev`)
+  #      - traefik.http.routers.immichkiosk-server-rtr.entrypoints=https
+  #      - traefik.http.services.immichkiosk-server-svc.loadbalancer.server.port=3000
+  power-tools:
+    container_name: immich_power_tools
+    image: ghcr.io/varun-raj/immich-power-tools:latest
+    networks:
+      cn1: null
+        #ports:
+        #- "8001:3000"
+    depends_on:
+      - redis
+      - database
+      - immich-server
+    env_file:
+      - .env
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.powertools-rtr.tls=true
+      - traefik.http.routers.powertools-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.powertools-rtr.entrypoints=https
+      - traefik.http.services.powertools-svc.loadbalancer.server.port=3000
+volumes:
+  model-cache: null
+  synology-photos:
+    external: true
+  media_immich_amy:
+    external: true
+  media_immich_kyle:
+    external: true
+networks:
+  cn1:
+    external: true

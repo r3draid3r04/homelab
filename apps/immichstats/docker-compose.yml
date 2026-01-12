@@ -1,0 +1,23 @@
+services:
+  immichstat:
+    image: registry.kylerockwell.dev/docker/immichstats:latest
+    container_name: immichstat
+    environment:
+      - NODE_ENV=production
+      - IMMICH_URL=${IMMICH_URL}
+      - IMMICH_API_KEY=${IMMICH_API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+    env_file:
+      - .env
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.immichstats-server-rtr.tls=true
+      - traefik.http.routers.immichstats-server-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.immichstats-server-rtr.entrypoints=https
+      - traefik.http.services.immichstats-server-svc.loadbalancer.server.port=3000
+    networks:
+      cn1: null
+networks:
+  cn1:
+    external: true

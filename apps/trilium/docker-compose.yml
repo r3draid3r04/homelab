@@ -1,0 +1,19 @@
+services:
+  trilium:
+    image: triliumnext/trilium:latest
+    restart: unless-stopped
+    networks:
+      cn1: null
+    ports:
+      - 8383:8080
+    volumes:
+      - /home/kyle/appdata/trilium:/home/node/trilium-data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.trilium-server-rtr.tls=true
+      - traefik.http.routers.trilium-server-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.trilium-server-rtr.entrypoints=https
+      - traefik.http.services.trilium-server-svc.loadbalancer.server.port=8080
+networks:
+  cn1:
+    external: true

@@ -1,0 +1,152 @@
+services:
+  # prometheus:
+  #   image: prom/prometheus
+  #   container_name: prometheus
+  #   command:
+  #     - --config.file=/etc/prometheus/prometheus.yml
+  #   ports:
+  #     - 9091:9090
+  #   expose:
+  #     - 9090
+  #   networks:
+  #     cn1: null
+  #   restart: unless-stopped
+  #   extra_hosts:
+  #     - overwatch:host-gateway
+  #   volumes:
+  #     - /home/kyle/appdata/prometheus:/etc/prometheus
+  #     - prom_data:/prometheus
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3004:3000
+    expose:
+      - 3000
+    environment:
+      # increases the log level from info to debug
+      - GF_PANELS_DISABLE_SANITIZE_HTML=true
+    networks:
+      cn1: null
+    restart: unless-stopped
+    volumes:
+      - /home/kyle/appdata/grafana:/etc/grafana/provisioning/datasources
+      - grafana_data:/var/lib/grafana
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.grafana-server-rtr.tls=true
+      - traefik.http.routers.grafana-server-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.grafana-server-rtr.entrypoints=https
+      - traefik.http.services.grafana-server-svc.loadbalancer.server.port=3000
+  snmp:
+    image: quay.io/prometheus/snmp-exporter
+    container_name: snmp
+    volumes:
+      - /home/kyle/appdata/snmp-exporter:/etc/snmp_exporter
+    networks:
+      cn1: null
+    ports:
+      - 9116:9116
+      - 116:116/udp
+    restart: always
+    command: --config.file=/etc/snmp_exporter/snmp.yml
+  influxdb:
+    image: influxdb:2.7.6-alpine
+    container_name: influxdb2
+    ports:
+      - 8086:8086
+    expose:
+      - 8086
+    networks:
+      cn1: null
+    extra_hosts:
+      - overwatch:host-gateway
+    volumes:
+      - influxdb2_data:/var/lib/influxdb2
+      - /home/kyle/appdata/influxdb2/config:/etc/influxdb2
+      - /home/kyle/appdata/influxdb2/scripts:/docker-entrypoint-initdb.d
+  # telegraf:
+  #   image: telegraf:latest
+  #   pid: host
+  #   container_name: telegraf
+  #   user: telegraf:988 # make sure to run 'getent group docker' on the host for appropriate group number for docker.
+  #   restart: always
+  #   networks:
+  #     cn1: null
+  #   entrypoint: /bin/bash -c "/entrypoint.sh telegraf"
+  #   extra_hosts:
+  #     - overwatch:host-gateway
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /home/kyle/appdata/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+  #     - /:/hostfs:ro
+  #   environment:
+  #     - HOST_ETC=/hostfs/etc
+  #     - HOST_PROC=/hostfs/proc
+  #     - HOST_SYS=/hostfs/sys
+  #     - HOST_VAR=/hostfs/var
+  #     - HOST_RUN=/hostfs/run
+  #     - HOST_MOUNT_PREFIX=/hostfs
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    networks:
+      cn1: null
+    ports:
+      - "3100"
+    volumes:
+      # directory must be created first, with uid:gid 10001:10001
+      - /home/kyle/appdata/loki:/loki
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    networks:
+      cn1: null
+    volumes:
+      - /home/kyle/appdata/promtail/promtail-config.yaml:/etc/promtail/config.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/log:/var/log:ro
+      - /home/kyle/appdata/syslog-ng/log/messages-kv.log:/var/log/messages-kv.log:ro
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor-amd64:v0.52.1
+    container_name: monitoring_cadvisor
+    restart: unless-stopped
+    networks:
+      cn1: null
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      # Add these volume mounts for modern cgroup hierarchies
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      # For systems using cgroupv2
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+      # For older systems still using legacy cgroups
+      - /cgroup:/cgroup:ro
+    expose:
+      - 8080
+  syslog-ng:
+    image: lscr.io/linuxserver/syslog-ng:latest
+    container_name: syslog-ng
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - LOG_TO_STDOUT= #optional
+    volumes:
+      - /home/kyle/appdata/syslog-ng/config:/config
+      - /home/kyle/appdata/syslog-ng/log:/var/log #optional
+    ports:
+      - 514:5514/udp
+      - 601:6601/tcp
+      - 6514:6514/tcp
+    restart: unless-stopped
+volumes:
+  prom_data: null
+  grafana_data: null
+  influxdb2_data: null
+  geoip-data: null
+networks:
+  cn1:
+    external: true

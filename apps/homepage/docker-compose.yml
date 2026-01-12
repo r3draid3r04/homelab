@@ -1,0 +1,22 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${HOSTNAME}
+    volumes:
+      - /home/kyle/appdata/homepage/config/:/app/config # Make sure your local config directory exists
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    restart: unless-stopped
+    networks:
+      cn1: null
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homepage-rtr.tls=true
+      - traefik.http.routers.homepage-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.homepage-rtr.entrypoints=https
+      - traefik.http.services.homepage-svc.loadbalancer.server.port=3000
+      - diun.enable=true
+networks:
+  cn1:
+    external: true

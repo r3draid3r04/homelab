@@ -1,0 +1,25 @@
+services:
+  whatsupdocker:
+    image: getwud/wud
+    container_name: wud
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=America/Chicago
+      - WUD_TRIGGER_MQTT_HA_URL=${MQTT_BROKER_URL}
+      - WUD_TRIGGER_MQTT_HA_USER=${MQTT_BROKER_USER}
+      - WUD_TRIGGER_MQTT_HA_PASSWORD=${MQTT_BROKER_PASSWORD}
+      - WUD_TRIGGER_MQTT_HA_CLIENTID=wud_homeassistant
+      - WUD_TRIGGER_MQTT_HA_TOPIC=wud/container
+      - WUD_TRIGGER_MQTT_HA_HASS_ENABLED=true
+      - WUD_TRIGGER_MQTT_HA_HASS_DISCOVERY=true
+      - WUD_TRIGGER_MQTT_HA_HASS_PREFIX=homeassistant
+      - WUD_REGISTRY_CUSTOM_PRIVATE_URL=${WUD_REGISTRY_URL}
+      - WUD_REGISTRY_CUSTOM_PRIVATE_LOGIN=${WUD_REGISTRY_USER}
+      - WUD_REGISTRY_CUSTOM_PRIVATE_PASSWORD=${WUD_REGISTRY_PASSWORD}
+    restart: unless-stopped
+    ports:
+      - 3007:3000
+networks:
+  cn1:
+    external: true

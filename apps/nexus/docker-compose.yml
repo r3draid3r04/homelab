@@ -1,0 +1,29 @@
+services:
+  nexus3:
+    ports:
+      - 8481:8081
+      - 8089:8089
+    container_name: nexus
+    image: sonatype/nexus3
+    volumes:
+      - /home/kyle/appdata/nexus/nexus_data:/nexus-data
+    networks:
+      cn1: null
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      # Nexus (main webinterface)
+      - traefik.http.routers.nexus-rtr.tls=true
+      - traefik.http.routers.nexus-rtr.rule=Host(`${HOSTNAME_NEXUS}`)
+      - traefik.http.routers.nexus-rtr.entrypoints=https
+      - traefik.http.services.nexus-svc.loadbalancer.server.port=8081
+      - traefik.http.routers.nexus-rtr.service=nexus-svc
+      # Docker registry (runs on separate port 8089 and needs to be configured in Nexus first
+      - traefik.http.routers.registry-rtr.rule=Host(`${HOSTNAME_NEXUS_REGISTRY}`)
+      - traefik.http.routers.registry-rtr.entrypoints=https
+      - traefik.http.routers.registry-rtr.tls=true
+      - traefik.http.services.registry-svc.loadbalancer.server.port=8089
+      - traefik.http.routers.registry-rtr.service=registry-svc
+networks:
+  cn1:
+    external: true

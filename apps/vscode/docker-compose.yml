@@ -1,0 +1,29 @@
+services:
+  code-server:
+    image: linuxserver/code-server:latest
+    container_name: code-server
+    restart: unless-stopped
+    environment:
+      - TZ=America/Chicago # Specify a timezone to use EG Europe/London
+      - SUDO_PASSWORD=${VSCODE_SUDO_PASSWORD} # Optional: Set a sudo password to use sudo within code-server
+      - PUID=1000 # for UserID
+      - PROXY_DOMAIN=${HOSTNAME} # If this optional variable is set, this domain will be proxied for subdomain proxying.
+      - PGID=1000 # for GroupID
+    volumes:
+      - /home/kyle/appdata/vscode/config:/config # Contains all relevant configuration files.
+      - /home/kyle/appdata:/appdata
+    ports:
+      - 8443:8443/tcp # Web UI
+    networks:
+      cn1: null
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.code-server-rtr.tls=true
+      - traefik.http.routers.code-server-rtr.rule=Host(`${HOSTNAME}`)
+      #- traefik.http.routers.code-server-rtr.middlewares=default-headers
+      - traefik.http.routers.code-server-rtr.entrypoints=https
+      - traefik.http.services.code-server-svc.loadbalancer.server.port=8443
+      - diun.enable=true
+networks:
+  cn1:
+    external: true

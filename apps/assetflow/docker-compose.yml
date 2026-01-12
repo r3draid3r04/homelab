@@ -1,0 +1,69 @@
+services:
+  assetflow:
+    image: registry.kylerockwell.dev/docker/assetflow:0.9.6
+    container_name: assetflow
+    user: root # Run as root user instead of nextjs
+    ports:
+      - 3032:3000
+    volumes:
+      - synology-plex-artwork:/app/downloads
+      - /home/kyle/appdata/assetflow/uploads:/app/public/uploads
+      - /home/kyle/appdata/assetflow/prisma:/app/prisma # Persist SQLite database
+    networks:
+      cn1: null
+    environment:
+      - TMDB_API_KEY=${TMDB_API_KEY}
+      - TVDB_API_ENABLED=true
+      - NEXT_PUBLIC_TVDB_API_ENABLED=true
+      - TVDB_API_KEY=${TVDB_API_KEY}
+      - TVDB_PIN=${TVDB_PIN}
+      - PLEX_BASE_URL=${PLEX_BASE_URL}
+      - PLEX_TOKEN=${PLEX_TOKEN}
+      - PLEX_API_ENABLED=true
+      - NEXT_PUBLIC_USE_DIRECT_TMDB=true
+      - NEXT_PUBLIC_USE_DIRECT_TVDB=true
+      - DATABASE_URL=file:/app/prisma/tmdb-custom-artwork.db # SQLite database path
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      # Main router
+      - traefik.http.routers.assetflow.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.assetflow.entrypoints=https
+      - traefik.http.routers.assetflow.tls.certresolver=letsencrypt
+      - traefik.http.routers.assetflow.service=assetflow
+      # Image proxy router (high priority)
+      - traefik.http.routers.assetflow-image-proxy.rule=Host(`${HOSTNAME}`)
+        && PathPrefix(`/api/proxy/`)
+      - traefik.http.routers.assetflow-image-proxy.entrypoints=https
+      - traefik.http.routers.assetflow-image-proxy.tls.certresolver=letsencrypt
+      - traefik.http.routers.assetflow-image-proxy.priority=300
+      - traefik.http.routers.assetflow-image-proxy.middlewares=assetflow-image-proxy-permissive
+      - traefik.http.routers.assetflow-image-proxy.service=assetflow
+      # Uploads router
+      - traefik.http.routers.assetflow-uploads.rule=Host(`${HOSTNAME}`)
+        && PathPrefix(`/api/uploads/`)
+      - traefik.http.routers.assetflow-uploads.entrypoints=https
+      - traefik.http.routers.assetflow-uploads.tls.certresolver=letsencrypt
+      - traefik.http.routers.assetflow-uploads.priority=200
+      - traefik.http.routers.assetflow-uploads.middlewares=assetflow-uploads-permissive
+      - traefik.http.routers.assetflow-uploads.service=assetflow
+      # Middlewares (defined here with the container)
+      - traefik.http.middlewares.assetflow-image-proxy-permissive.headers.customresponseheaders.Access-Control-Allow-Origin=*
+      - traefik.http.middlewares.assetflow-image-proxy-permissive.headers.customresponseheaders.Access-Control-Allow-Methods=GET,
+        HEAD, OPTIONS
+      - traefik.http.middlewares.assetflow-image-proxy-permissive.headers.customresponseheaders.Access-Control-Allow-Headers=*
+      - traefik.http.middlewares.assetflow-image-proxy-permissive.headers.contenttypenosniff=false
+      - traefik.http.middlewares.assetflow-image-proxy-permissive.headers.browserxssfilter=false
+      - traefik.http.middlewares.assetflow-uploads-permissive.headers.customrequestheaders.Accept=*/*
+      - traefik.http.middlewares.assetflow-uploads-permissive.headers.customresponseheaders.Access-Control-Allow-Origin=*
+      - traefik.http.middlewares.assetflow-uploads-permissive.headers.customresponseheaders.Access-Control-Allow-Methods=GET,
+        HEAD, OPTIONS
+      - traefik.http.middlewares.assetflow-uploads-permissive.headers.customresponseheaders.Access-Control-Allow-Headers=*
+      # Service (pointing to the container port)
+      - traefik.http.services.assetflow.loadbalancer.server.port=3000
+networks:
+  cn1:
+    external: true
+volumes:
+  synology-plex-artwork:
+    external: true

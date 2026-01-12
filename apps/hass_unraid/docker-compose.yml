@@ -1,0 +1,14 @@
+services:
+  hass-unraid:
+    image: registry.kylerockwell.dev/docker/hass-unraid:latest
+    container_name: hass-unraid
+    network_mode: bridge
+    restart: always
+    environment:
+      - TZ=America/Chicago
+    volumes:
+      - /home/kyle/appdata/unraid/data:/data
+    labels:
+      - kuma.__enable=true
+      - uptimekuma.keyword=main.py
+networks: {}

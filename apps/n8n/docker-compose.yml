@@ -1,0 +1,25 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: n8n
+    restart: always
+    ports:
+      - 5678:5678
+    networks:
+      cn1: null
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD:-securepassword}
+      - N8N_HOST=0.0.0.0
+    volumes:
+      - /home/kyle/appdata/n8n:/home/node/.n8n
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.n8n-rtr.tls=true
+      - traefik.http.routers.n8n-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.n8n-rtr.entrypoints=https
+      - traefik.http.services.n8n-svc.loadbalancer.server.port=5678
+networks:
+  cn1:
+    external: true

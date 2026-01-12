@@ -1,0 +1,22 @@
+services:
+  # Vaultwarden Password Manager
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    # profiles: ["core", "all"]
+    networks:
+      cn1: null
+    volumes:
+      - /appdata/vaultwarden/data:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.vaultwarden.tls=true
+      - traefik.http.routers.vaultwarden.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.vaultwarden.entrypoints=https
+      - traefik.http.services.vaultwarden.loadbalancer.server.port=80
+networks:
+  cn1:
+    external: true

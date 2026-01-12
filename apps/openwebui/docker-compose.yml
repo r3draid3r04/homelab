@@ -1,0 +1,16 @@
+services:
+  webui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - 3080:8080
+    environment:
+      - OLLAMA_BASE_URL=http://10.35.1.202:11434
+    volumes:
+      - webui:/app/data
+    networks:
+      cn1:
+volumes:
+  webui:
+networks:
+  cn1:
+    external: true

@@ -1,0 +1,29 @@
+services:
+  filebot:
+    container_name: filebot
+    ports:
+      - 5801:5800
+    #environment:
+    #  - USER_ID=0
+    #  - GROUP_ID=0
+    volumes:
+      - /home/kyle/appdata/filebot/config:/config:rw
+      - media_share:/storage
+    image: jlesage/filebot
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.filebot-rtr.tls=true
+      - traefik.http.routers.filebot-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.filebot-rtr.entrypoints=https
+      - traefik.http.services.filebot-svc.loadbalancer.passhostheader=true
+      - traefik.http.services.filebot-svc.loadbalancer.server.port=5800
+      - diun.enable=true
+    networks:
+      cn1: null
+networks:
+  cn1:
+    external: true
+volumes:
+  media_share:
+    external: true
