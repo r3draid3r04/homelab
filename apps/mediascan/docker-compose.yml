@@ -1,6 +1,6 @@
 services:
   mediascan:
-    image: registry.kylerockwell.dev/docker/mediascan:0.2.1
+    image: registry.kylerockwell.dev/docker/mediascan:0.2.2
     container_name: mediascan
     ports:
       - 3092:80 # Access the app at http://localhost:3000
