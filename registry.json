@@ -2,309 +2,284 @@
   "$schema": "https://github.com/getarcaneapp/arcane-templates/schema.json",
   "name": "r3draid3r04 Homelab",
   "description": "Docker Compose templates for a complete homelab setup including media management, monitoring, automation, and self-hosted services.",
-  "base_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/",
+  "version": "1.0.0",
+  "author": "r3draid3r04",
+  "url": "https://github.com/r3draid3r04/homelab",
   "templates": [
     {
+      "id": "assetflow",
       "name": "AssetFlow",
       "description": "Custom artwork management tool for Plex media libraries with TMDB and TVDB integration.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/assetflow/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/assetflow/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/assetflow/README.md",
-      "tags": [
-        "media",
-        "plex",
-        "artwork"
-      ]
+      "tags": ["media", "plex", "artwork"]
     },
     {
+      "id": "filebot",
       "name": "FileBot",
       "description": "Media file organizer and renamer with a web-based UI.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/filebot/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/filebot/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/filebot/README.md",
-      "tags": [
-        "media",
-        "automation",
-        "files"
-      ]
+      "tags": ["media", "automation", "files"]
     },
     {
+      "id": "freshrss",
       "name": "FreshRSS",
       "description": "Self-hosted RSS feed aggregator with a clean web interface.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/freshrss/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/freshrss/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/freshrss/README.md",
-      "tags": [
-        "rss",
-        "news",
-        "self-hosted"
-      ]
+      "tags": ["rss", "news", "self-hosted"]
     },
     {
+      "id": "glances",
       "name": "Glances",
       "description": "Real-time system monitoring tool with a web UI for CPU, memory, disk, and network stats.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/glances/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/glances/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/glances/README.md",
-      "tags": [
-        "monitoring",
-        "system",
-        "dashboard"
-      ]
+      "tags": ["monitoring", "system", "dashboard"]
     },
     {
+      "id": "hass-unraid",
       "name": "HASS Unraid",
       "description": "Custom Home Assistant integration for monitoring and controlling Unraid servers.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/hass_unraid/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/hass_unraid/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/hass_unraid/README.md",
-      "tags": [
-        "home-automation",
-        "unraid",
-        "monitoring"
-      ]
+      "tags": ["home-automation", "unraid", "monitoring"]
     },
     {
+      "id": "homepage",
       "name": "Homepage",
       "description": "Modern application dashboard with service integrations and Docker support.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/homepage/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/homepage/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/homepage/README.md",
-      "tags": [
-        "dashboard",
-        "self-hosted"
-      ]
+      "tags": ["dashboard", "self-hosted"]
     },
     {
+      "id": "huntarr",
       "name": "Huntarr",
       "description": "Automated missing media hunter for Sonarr and Radarr.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/huntarr/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/huntarr/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/huntarr/README.md",
-      "tags": [
-        "media",
-        "automation",
-        "arr"
-      ]
+      "tags": ["media", "automation", "arr"]
     },
     {
+      "id": "immich",
       "name": "Immich",
       "description": "Self-hosted photo and video management platform with machine learning features, Redis, and PostgreSQL.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/immich/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/immich/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/immich/README.md",
-      "tags": [
-        "photos",
-        "media",
-        "machine-learning",
-        "database"
-      ]
+      "tags": ["photos", "media", "machine-learning", "database"]
     },
     {
+      "id": "immichstats",
       "name": "ImmichStats",
       "description": "Statistics dashboard for Immich photo library.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/immichstats/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/immichstats/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/immichstats/README.md",
-      "tags": [
-        "photos",
-        "monitoring",
-        "dashboard"
-      ]
+      "tags": ["photos", "monitoring", "dashboard"]
     },
     {
+      "id": "kometa-gui",
       "name": "Kometa GUI",
       "description": "Web-based GUI for Kometa (formerly Plex Meta Manager) with Mediux integration for managing Plex metadata and collections.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/kometa-gui/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/kometa-gui/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/kometa-gui/README.md",
-      "tags": [
-        "media",
-        "plex",
-        "metadata",
-        "automation"
-      ]
+      "tags": ["media", "plex", "metadata", "automation"]
     },
     {
+      "id": "mediascan",
       "name": "MediaScan",
       "description": "Plex media library scanner and analyzer for tracking media health.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/mediascan/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/mediascan/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/mediascan/README.md",
-      "tags": [
-        "media",
-        "plex",
-        "monitoring"
-      ]
+      "tags": ["media", "plex", "monitoring"]
     },
     {
+      "id": "n8n",
       "name": "n8n",
       "description": "Workflow automation platform with a visual editor for connecting APIs and services.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/n8n/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/n8n/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/n8n/README.md",
-      "tags": [
-        "automation",
-        "workflow",
-        "integration"
-      ]
+      "tags": ["automation", "workflow", "integration"]
     },
     {
+      "id": "nexus",
       "name": "Nexus",
       "description": "Sonatype Nexus Repository Manager for hosting Docker images and other artifacts.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/nexus/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/nexus/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/nexus/README.md",
-      "tags": [
-        "development",
-        "registry",
-        "artifacts"
-      ]
+      "tags": ["development", "registry", "artifacts"]
     },
     {
+      "id": "open-webui",
       "name": "Open WebUI",
       "description": "Web interface for interacting with Ollama and other LLM backends.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/openwebui/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/openwebui/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/openwebui/README.md",
-      "tags": [
-        "ai",
-        "llm",
-        "self-hosted"
-      ]
+      "tags": ["ai", "llm", "self-hosted"]
     },
     {
+      "id": "scrypted",
       "name": "Scrypted",
       "description": "Home video integration platform with hardware acceleration and automatic updates via Watchtower.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/scrypted/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/scrypted/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/scrypted/README.md",
-      "tags": [
-        "home-automation",
-        "cameras",
-        "security"
-      ]
+      "tags": ["home-automation", "cameras", "security"]
     },
     {
+      "id": "seerr",
       "name": "Seerr",
       "description": "Media request management tool (Jellyseerr) for Plex, Sonarr, and Radarr.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/seerr/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/seerr/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/seerr/README.md",
-      "tags": [
-        "media",
-        "requests",
-        "arr"
-      ]
+      "tags": ["media", "requests", "arr"]
     },
     {
+      "id": "speedtest-tracker",
       "name": "Speedtest Tracker",
       "description": "Automated internet speed test tracker with historical data and graphs.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/speedtest-tracker/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/speedtest-tracker/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/speedtest-tracker/README.md",
-      "tags": [
-        "monitoring",
-        "network",
-        "dashboard"
-      ]
+      "tags": ["monitoring", "network", "dashboard"]
     },
     {
+      "id": "tracearr",
       "name": "Tracearr",
       "description": "Activity tracker for *arr stack applications with built-in PostgreSQL and Redis.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/tracearr/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/tracearr/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/tracearr/README.md",
-      "tags": [
-        "media",
-        "monitoring",
-        "arr"
-      ]
+      "tags": ["media", "monitoring", "arr"]
     },
     {
+      "id": "traefik",
       "name": "Traefik",
       "description": "Reverse proxy and SSL termination with Let's Encrypt and Cloudflare DNS challenge support.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/traefik/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/traefik/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/traefik/README.md",
-      "tags": [
-        "proxy",
-        "networking",
-        "ssl"
-      ]
+      "tags": ["proxy", "networking", "ssl"]
     },
     {
+      "id": "trilium",
       "name": "Trilium",
       "description": "Hierarchical note-taking application with rich text editing and scripting.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/trilium/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/trilium/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/trilium/README.md",
-      "tags": [
-        "notes",
-        "productivity",
-        "self-hosted"
-      ]
+      "tags": ["notes", "productivity", "self-hosted"]
     },
     {
+      "id": "uptime-kuma",
       "name": "Uptime Kuma",
       "description": "Self-hosted uptime monitoring tool with notifications and status pages.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/uptime-kuma/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/uptime-kuma/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/uptime-kuma/README.md",
-      "tags": [
-        "monitoring",
-        "uptime",
-        "dashboard"
-      ]
+      "tags": ["monitoring", "uptime", "dashboard"]
     },
     {
+      "id": "vaultwarden",
       "name": "Vaultwarden",
       "description": "Lightweight Bitwarden-compatible password manager server.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/vaultwarden/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/vaultwarden/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/vaultwarden/README.md",
-      "tags": [
-        "security",
-        "passwords",
-        "self-hosted"
-      ]
+      "tags": ["security", "passwords", "self-hosted"]
     },
     {
+      "id": "vscode-server",
       "name": "VS Code Server",
       "description": "Web-based VS Code editor powered by code-server with Traefik integration.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/vscode/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/vscode/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/vscode/README.md",
-      "tags": [
-        "development",
-        "ide",
-        "self-hosted"
-      ]
+      "tags": ["development", "ide", "self-hosted"]
     },
     {
+      "id": "whats-up-docker",
       "name": "What's Up Docker",
       "description": "Docker container update notifier with MQTT and Home Assistant integration.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/wud/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/wud/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/wud/README.md",
-      "tags": [
-        "monitoring",
-        "docker",
-        "home-automation"
-      ]
+      "tags": ["monitoring", "docker", "home-automation"]
     },
     {
+      "id": "monitoring-stack",
       "name": "Monitoring Stack",
       "description": "Full monitoring infrastructure with Grafana, InfluxDB, Loki, Promtail, cAdvisor, SNMP exporter, and syslog-ng.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
       "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/infra/monitoring/compose.yaml",
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/infra/monitoring/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/infra/monitoring/README.md",
-      "tags": [
-        "monitoring",
-        "grafana",
-        "logging",
-        "infrastructure"
-      ]
+      "tags": ["monitoring", "grafana", "logging", "infrastructure"]
     }
   ]
 }
