@@ -1,0 +1,20 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/home-assistant.png
+  urls:
+    - https://www.home-assistant.io/
+
+services:
+  hass-unraid:
+    image: registry.kylerockwell.dev/docker/hass-unraid:latest
+    container_name: hass-unraid
+    network_mode: bridge
+    restart: always
+    environment:
+      - TZ=America/Chicago
+    volumes:
+      - ${APPDATA_PATH}/unraid/data:/data
+    labels:
+      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/home-assistant.png
+      - kuma.__enable=true
+      - uptimekuma.keyword=main.py
+networks: {}

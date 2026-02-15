@@ -1,0 +1,28 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/vaultwarden.png
+  urls:
+    - https://github.com/dani-garcia/vaultwarden
+
+services:
+  # Vaultwarden Password Manager
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    # profiles: ["core", "all"]
+    networks:
+      cn1: null
+    volumes:
+      - /appdata/vaultwarden/data:/data
+    labels:
+      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/vaultwarden.png
+      - traefik.enable=true
+      - traefik.http.routers.vaultwarden.tls=true
+      - traefik.http.routers.vaultwarden.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.vaultwarden.entrypoints=https
+      - traefik.http.services.vaultwarden.loadbalancer.server.port=80
+networks:
+  cn1:
+    external: true

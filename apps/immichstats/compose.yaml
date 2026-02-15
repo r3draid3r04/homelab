@@ -1,0 +1,27 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/immich.png
+  urls:
+    - https://immich.app/
+
+services:
+  immichstat:
+    image: registry.kylerockwell.dev/docker/immichstats:latest
+    container_name: immichstat
+    environment:
+      - NODE_ENV=production
+      - IMMICH_URL=${IMMICH_URL}
+      - IMMICH_API_KEY=${IMMICH_API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+    restart: unless-stopped
+    labels:
+      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/immich.png
+      - traefik.enable=true
+      - traefik.http.routers.immichstats-server-rtr.tls=true
+      - traefik.http.routers.immichstats-server-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.immichstats-server-rtr.entrypoints=https
+      - traefik.http.services.immichstats-server-svc.loadbalancer.server.port=3000
+    networks:
+      cn1: null
+networks:
+  cn1:
+    external: true

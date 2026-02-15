@@ -1,0 +1,25 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/trilium.png
+  urls:
+    - https://github.com/TriliumNext/Notes
+
+services:
+  trilium:
+    image: triliumnext/trilium:latest
+    restart: unless-stopped
+    networks:
+      cn1: null
+    ports:
+      - 8383:8080
+    volumes:
+      - ${APPDATA_PATH}/trilium:/home/node/trilium-data
+    labels:
+      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/trilium.png
+      - traefik.enable=true
+      - traefik.http.routers.trilium-server-rtr.tls=true
+      - traefik.http.routers.trilium-server-rtr.rule=Host(`${HOSTNAME}`)
+      - traefik.http.routers.trilium-server-rtr.entrypoints=https
+      - traefik.http.services.trilium-server-svc.loadbalancer.server.port=8080
+networks:
+  cn1:
+    external: true

@@ -1,0 +1,23 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/speedtest-tracker.png
+  urls:
+    - https://github.com/alexjustesen/speedtest-tracker
+
+services:
+    speedtest-tracker:
+        image: lscr.io/linuxserver/speedtest-tracker:latest
+        restart: unless-stopped
+        container_name: speedtest-tracker
+        ports:
+            - 8187:80
+            - 8447:443
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - APP_KEY=${SPEEDTEST_APP_KEY}
+            - DB_CONNECTION=sqlite
+        labels:
+            - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/speedtest-tracker.png
+        volumes:
+            - ${APPDATA_PATH}/speedtest/data:/config
+            - ${APPDATA_PATH}/speedtest/keys:/config/keys
