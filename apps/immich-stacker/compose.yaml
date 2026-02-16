@@ -1,0 +1,18 @@
+name: immich stacker
+
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/immich.png
+  urls:
+    - https://immich.app/
+    - https://github.com/immich-app/immich
+    - https://github.com/mattdavis90/immich-stacker
+services:
+  stacker:
+    image: mattdavis90/immich-stacker:latest
+    container_name: immich-stacker
+    restart: "no"
+    environment:
+      IMMICH_API_KEY: ${IMMICH_API_KEY}
+      IMMICH_ENDPOINT: ${IMMICH_ENDPOINT}
+      IMMICH_MATCH: ${IMMICH_MATCH:-"\.(JPG|DNG)$"}
+      IMMICH_PARENT: ${IMMICH_PARENT:-"\.JPG$"}

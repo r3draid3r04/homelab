@@ -95,6 +95,16 @@
       "tags": ["photos", "media", "machine-learning", "database"]
     },
     {
+      "id": "immich-stacker",
+      "name": "Immich Stacker",
+      "description": "Automatically stacks related photos in Immich by matching file extensions (e.g., JPG + DNG pairs).",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
+      "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/immich-stacker/compose.yaml",
+      "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/immich-stacker/README.md",
+      "tags": ["photos", "immich", "automation"]
+    },
+    {
       "id": "immichstats",
       "name": "ImmichStats",
       "description": "Statistics dashboard for Immich photo library.",
