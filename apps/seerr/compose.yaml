@@ -1,11 +1,12 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/jellyseerr.png
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/overseerr.png
   urls:
-    - https://github.com/Fallenbagel/jellyseerr
+    - https://github.com/seerr-team/seerr
+    - https://docs.seerr.dev/
 
 services:
   seerr:
-    image: fallenbagel/jellyseerr:latest
+    image: ghcr.io/seerr-team/seerr:latest
     init: true
     container_name: seerr
     environment:
@@ -26,7 +27,7 @@ services:
       retries: 3
     restart: unless-stopped
     labels:
-      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/jellyseerr.png
+      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/overseerr.png
       - traefik.enable=true
       - traefik.http.routers.seerr-rtr.tls=true
       - traefik.http.routers.seerr-rtr.rule=Host(`${HOSTNAME}`)

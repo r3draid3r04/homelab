@@ -15,7 +15,7 @@ services:
     networks:
       cn1: null
     volumes:
-      - /appdata/vaultwarden/data:/data
+      - ${APPDATA_PATH}/vaultwarden/data:/data
     labels:
       - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/vaultwarden.png
       - traefik.enable=true

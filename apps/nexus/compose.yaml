@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/nexus-sonatype.png
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/nexus.png
   urls:
     - https://www.sonatype.com/products/sonatype-nexus-repository
 
@@ -16,7 +16,7 @@ services:
       cn1: null
     restart: unless-stopped
     labels:
-      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/nexus-sonatype.png
+      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/nexus.png
       - traefik.enable=true
       # Nexus (main webinterface)
       - traefik.http.routers.nexus-rtr.tls=true
