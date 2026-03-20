@@ -73,17 +73,6 @@
       "tags": ["dashboard", "self-hosted"]
     },
     {
-      "id": "huntarr",
-      "name": "Huntarr",
-      "description": "Automated missing media hunter for Sonarr and Radarr.",
-      "version": "1.0.0",
-      "author": "r3draid3r04",
-      "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/huntarr/compose.yaml",
-      "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/huntarr/.env.example",
-      "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/huntarr/README.md",
-      "tags": ["media", "automation", "arr"]
-    },
-    {
       "id": "immich",
       "name": "Immich",
       "description": "Self-hosted photo and video management platform with machine learning features, Redis, and PostgreSQL.",
@@ -279,6 +268,61 @@
       "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/wud/.env.example",
       "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/wud/README.md",
       "tags": ["monitoring", "docker", "home-automation"]
+    },
+    {
+      "id": "adguard-home",
+      "name": "AdGuard Home",
+      "description": "Network-wide DNS-based ad blocker and privacy protection with a web dashboard.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
+      "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/adguard-home/compose.yaml",
+      "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/adguard-home/.env.example",
+      "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/adguard-home/README.md",
+      "tags": ["networking", "dns", "ad-blocking", "privacy"]
+    },
+    {
+      "id": "jellyfin",
+      "name": "Jellyfin",
+      "description": "Self-hosted media streaming server for movies, TV shows, music, and more.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
+      "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/Jellyfin/compose.yaml",
+      "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/Jellyfin/.env.example",
+      "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/Jellyfin/README.md",
+      "tags": ["media", "streaming", "self-hosted"]
+    },
+    {
+      "id": "krokiet",
+      "name": "Krokiet",
+      "description": "Cross-platform file manager with a web-based UI for browsing and managing remote storage.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
+      "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/krokiet/compose.yaml",
+      "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/krokiet/.env.example",
+      "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/krokiet/README.md",
+      "tags": ["files", "storage", "self-hosted"]
+    },
+    {
+      "id": "network-optimizer",
+      "name": "Network Optimizer",
+      "description": "Network performance monitoring and optimization tool with speed testing, path analysis, and agent-based device management.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
+      "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/network-optimizer/compose.yaml",
+      "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/network-optimizer/.env.example",
+      "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/network-optimizer/README.md",
+      "tags": ["monitoring", "network", "performance"]
+    },
+    {
+      "id": "vpn-services",
+      "name": "VPN Services",
+      "description": "VPN-routed service stack using Gluetun as a gateway, with Cyberdrop-DL and Mullvad Browser tunneled through the VPN.",
+      "version": "1.0.0",
+      "author": "r3draid3r04",
+      "compose_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/vpn-services/compose.yaml",
+      "env_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/vpn-services/.env.example",
+      "documentation_url": "https://raw.githubusercontent.com/r3draid3r04/homelab/main/apps/vpn-services/README.md",
+      "tags": ["vpn", "networking", "privacy", "security"]
     },
     {
       "id": "monitoring-stack",

@@ -1,50 +1,45 @@
 # Kometa GUI
 
-Web-based GUI for Kometa (formerly Plex Meta Manager) with Mediux integration for managing Plex metadata and collections.
+Web-based GUI for managing Kometa (formerly Plex Meta Manager) metadata and collections, with ImageMaid for cleaning up unused artwork.
 
 ## Services
 
-| Service | Image | Description |
-|---------|-------|-------------|
-| kometagui | `registry.kylerockwell.dev/docker/kometagui:0.9.16` | Web GUI for Kometa |
-| kometa | `kometateam/kometa:nightly` | Kometa metadata manager |
+| Service | Image |
+|---------|-------|
+| kometawebui | `registry.kylerockwell.dev/docker/kometawebui:latest` |
+| kometa | `kometateam/kometa:nightly` |
+| imagemaid | `kometateam/imagemaid` |
 
 ## Ports
 
 | Host | Container | Service | Description |
 |------|-----------|---------|-------------|
-| 3005 | 3000 | kometagui | Frontend UI |
-| 3001 | 3001 | kometagui | Backend API |
+| 3333 | 3000 | kometawebui | Web UI |
 
 ## Volumes
 
 | Host Path | Container Path | Description |
 |-----------|---------------|-------------|
-| `/home/kyle/appdata/kometa/configs` | `/config` | Kometa configuration |
-| `/home/kyle/appdata/kometagui/cache` | `/cache` | GUI cache |
-| `/home/kyle/appdata/kometagui/data` | `/data` | GUI database |
-| `/home/kyle/appdata/kometa/logs` | `/logs` | Kometa logs |
-| `/var/run/docker.sock` | `/var/run/docker.sock` | Docker socket (read-only) |
+| `${APPDATA_PATH}/kometawebui` | `/app/data` | GUI database and state |
+| `${APPDATA_PATH}/kometa/configs` | `/app/data/configs` (kometawebui) | Kometa config files |
+| `${APPDATA_PATH}/kometa/configs` | `/config` (kometa) | Kometa config files |
+| `${APPDATA_PATH}/kometa/logs` | `/logs` | Kometa logs |
+| `${APPDATA_PATH}/kometa/cache` | `/cache` | Kometa cache |
+| `${APPDATA_PATH}/config` | `/config` (imagemaid) | ImageMaid configuration |
+| `${APPDATA_PATH}/plex` | `/plex` | Plex library config for ImageMaid |
 
 ## Environment Variables
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `NODE_ENV` | No | `development` | Node environment |
-| `PORT` | No | `3001` | Backend API port |
-| `CONFIG_DIR` | No | `/config` | Config directory |
-| `LOGS_DIR` | No | `/logs` | Logs directory |
-| `LOG_LEVEL` | No | `info` | Log verbosity |
-| `KOMETA_CONTAINER_NAME` | No | `kometa` | Docker container name to manage |
-| `FRONTEND_URL` | No | `http://localhost:3000` | Frontend URL |
-| `NEXT_PUBLIC_API_URL` | No | `http://localhost:3001` | Public API URL |
-| `NEXT_PUBLIC_WS_URL` | No | `http://localhost:3001` | WebSocket URL |
-| `MEDIUX_API_URL` | No | `https://staged.mediux.io/graphql` | Mediux GraphQL endpoint |
-| `MEDIUX_API_TOKEN` | Yes | - | Mediux API token |
-| `MEDIUX_ASSET_URL` | No | `https://staged.mediux.io/assets` | Mediux asset URL |
-| `MEDIUX_CACHE_DIR` | No | `/cache/mediux` | Mediux cache directory |
-| `MEDIUX_SYNC_INTERVAL` | No | `0 0 * * *` | Cron schedule for syncing |
-| `DATABASE_URL` | No | `file:/data/dev.db` | SQLite database path |
+| `APPDATA_PATH` | Yes | — | Base path for application data |
+| `DB_PATH` | No | `/app/data/kometa.db` | SQLite database path for GUI |
+| `TZ` | No | — | Timezone (e.g., `America/Chicago`) |
+| `KOMETA_CONFIG` | No | `/config/config.yml` | Path to Kometa config file |
+| `KOMETA_TIME` | No | `06:00` | Daily run time for Kometa |
+| `KOMETA_RUN` | No | `false` | Run Kometa on container start |
+| `KOMETA_NO_MISSING` | No | `false` | Skip missing items processing |
+| `KOMETA_NO_REPORT` | No | `false` | Skip report generation |
 
 ## Networks
 
@@ -53,4 +48,4 @@ Web-based GUI for Kometa (formerly Plex Meta Manager) with Mediux integration fo
 ## Links
 
 - [Kometa](https://kometa.wiki/)
-- [Mediux](https://mediux.io/)
+- [ImageMaid](https://github.com/Kometa-Team/ImageMaid)

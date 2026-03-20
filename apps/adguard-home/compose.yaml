@@ -1,0 +1,39 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/adguard-home.png
+  urls:
+    - https://adguard.com/adguard-home.html
+    - https://github.com/AdguardTeam/AdGuardHome
+
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    restart: unless-stopped
+    labels:
+      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/adguard-home.png
+
+    volumes:
+      - /my/own/workdir:/opt/adguardhome/work
+      - /my/own/confdir:/opt/adguardhome/conf
+
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "68:68/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "443:443/udp"
+      - "3000:3000/tcp"
+      - "853:853/tcp"
+      - "853:853/udp"
+      - "5443:5443/tcp"
+      - "5443:5443/udp"
+      - "6060:6060/tcp"
+    networks:
+      mv1:
+        ipv4_address: 192.168.1.10
+
+networks:
+  mv1:
+    external: true

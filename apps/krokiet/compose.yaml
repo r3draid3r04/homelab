@@ -1,0 +1,19 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/filebrowser.png
+  urls:
+    - https://github.com/jlesage/docker-krokiet
+
+services:
+  krokiet:
+    image: jlesage/krokiet
+    container_name: krokiet
+    ports:
+      - "5808:5800"
+    labels:
+      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/filebrowser.png
+    volumes:
+      - ${APPDATA_PATH}/krokiet:/config:rw
+      - synology-private:/storage:rw
+volumes:
+  synology-private:
+    external: true

@@ -1,0 +1,75 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/gluetun.png
+  urls:
+    - https://github.com/qdm12/gluetun
+
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    # line above must be uncommented to allow external containers to connect.
+    # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/connect-a-container-to-gluetun.md#external-container-to-gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8887:8888/tcp # HTTP proxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+      - 3002:3001/tcp # Mullvad Browser
+    labels:
+      - com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/gluetun.png
+    volumes:
+      - ${APPDATA_PATH}/gluetun:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
+      - VPN_TYPE=${VPN_TYPE}
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES}
+      - SERVER_CITIES=${SERVER_CITIES}
+      - TZ=${TZ}
+      # Server list updater
+      # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
+      - UPDATER_PERIOD=24h
+
+  cyberdrop-dl:
+    image: registry.kylerockwell.dev/docker/cyberdrop-dl:latest
+    container_name: cyberdrop-dl
+    volumes:
+      - ${APPDATA_PATH}/cyberdrop-dl:/app
+      - cyberdrop_dl:/downloads
+    stdin_open: true   # equivalent to -it
+    tty: true          # equivalent to -it
+    command: cyberdrop-dl
+    restart: "no"
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+
+  mullvad-browser:
+    image: lscr.io/linuxserver/mullvad-browser:latest
+    container_name: mullvad-browser
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - PIXELFLUX_WAYLAND=true
+      # Ensure these point to the rendered node injected by the runtime (usually renderD128)
+      - DRINODE=/dev/dri/renderD128
+      - DRI_NODE=/dev/dri/renderD128
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    volumes:
+      - ${APPDATA_PATH}/mullvad-browser/config:/config
+    shm_size: "1gb"
+    restart: "no"
+
+volumes:
+  cyberdrop_dl:
+    external: true

@@ -6,7 +6,7 @@ Self-hosted uptime monitoring tool with notifications and status pages.
 
 | Service | Image |
 |---------|-------|
-| uptime-kuma | `louislam/uptime-kuma:latest` |
+| uptime-kuma | `louislam/uptime-kuma:2` |
 
 ## Ports
 

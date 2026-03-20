@@ -18,19 +18,22 @@ registry.json   # Arcane template registry manifest
 
 | App | Description |
 |-----|-------------|
+| **AdGuard Home** | Network-wide DNS ad blocker and privacy protection |
 | **AssetFlow** | Custom artwork management for Plex with TMDB/TVDB integration |
 | **FileBot** | Media file organizer and renamer with web UI |
 | **FreshRSS** | Self-hosted RSS feed aggregator |
 | **Glances** | Real-time system monitoring with web UI |
 | **HASS Unraid** | Home Assistant integration for Unraid servers |
 | **Homepage** | Application dashboard with service integrations |
-| **Huntarr** | Automated missing media hunter for Sonarr/Radarr |
 | **Immich** | Self-hosted photo/video management with ML features |
 | **Immich Stacker** | Auto-stacks related photos in Immich (e.g., JPG + DNG pairs) |
 | **ImmichStats** | Statistics dashboard for Immich |
-| **Kometa GUI** | Web GUI for Kometa (Plex Meta Manager) with Mediux integration |
+| **Jellyfin** | Self-hosted media streaming server |
+| **Kometa GUI** | Web GUI for Kometa (Plex Meta Manager) with ImageMaid |
+| **Krokiet** | Web-based file manager for remote storage |
 | **MediaScan** | Plex media library scanner and analyzer |
 | **n8n** | Visual workflow automation platform |
+| **Network Optimizer** | Network performance monitoring with speed testing and path analysis |
 | **Nexus** | Sonatype Nexus Repository Manager for Docker images and artifacts |
 | **Open WebUI** | Web interface for Ollama and other LLM backends |
 | **Scrypted** | Home video integration platform with hardware acceleration |
@@ -41,6 +44,7 @@ registry.json   # Arcane template registry manifest
 | **Trilium** | Hierarchical note-taking with rich text and scripting |
 | **Uptime Kuma** | Self-hosted uptime monitoring with notifications |
 | **Vaultwarden** | Lightweight Bitwarden-compatible password manager |
+| **VPN Services** | Gluetun VPN gateway with Cyberdrop-DL and Mullvad Browser |
 | **VS Code Server** | Web-based VS Code via code-server |
 | **What's Up Docker** | Docker container update notifier with MQTT/HA integration |
 
